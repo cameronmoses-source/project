@@ -14,10 +14,13 @@ double mean(double arr[], int size);  // computes the average of all values in t
 
 
 int main(void) {
+
+    double arr[];
+    
     
     fopen("all_year_glsea_avg_c_C.txt", "r");
     
-    fscanf("all_year_glsea_avg_c_C.txt")
+    fscanf("all_year_glsea_avg_c_C.txt", "%lf", )
 
 
       }
