@@ -8,7 +8,7 @@ void bubblesort(double arr[], int size);  // function that sorts an array from l
 
 double findMedian(double arr[], int start, int end, int size);   // finds the median of an array
 
-void findQuartiles(double arr[], int size, double *Q1, double *Q2, double *Q3); // Calculates the quartiles 
+void findQuartiles(double arr[], int size,double *Q0, double *Q1, double *Q2, double *Q3, double *Q4); // Calculates the quartiles 
 
 double findmean(double arr[], int size);  // computes the average of all values in the array
 
@@ -18,6 +18,8 @@ int main(void) {
     //------------------------- opens file and creates arrary------------------------------//
     
     double arr[15000];  // creates arrary
+    
+    double Q0,Q1,Q2,Q3,Q4;//creates doubles for the quartiles 
     
     FILE *file;  // creates pointer
     
@@ -69,9 +71,12 @@ int main(void) {
     //--------------------------------Finding the mean----------------------//
     double mean1 = findmean(arr, size);
     
-    printf("\n mean: %f", mean1);
+    printf("\n mean: %f\n", mean1);
     
-}
+    findQuartiles(arr, size, &Q0, &Q1, &Q2, &Q3, &Q4);
+    printf("Q0=%lf, Q1=%lf, Q2=%lf, Q3=%lf, Q4=%lf\n",Q0,Q1,Q2,Q3,Q4);
+
+}//end of main function 
 
 
 
@@ -134,8 +139,30 @@ double findmean(double arr[], int size){
 }
 
 
-    
-    
-}
-
-
+void findQuartiles(double arr[], int size, double*Q0,double *Q1, double *Q2, double *Q3, double*Q4){    
+ bubblesort(arr,size);//calls the function to sort the array from least to greatest
+ *Q0=arr[0];//lowest element of the data set 
+ *Q4=arr[size-1];//highest element of the data set, gets shifted one to the right since it indexes at zero
+ *Q2=findMedian(arr,0,size,size);//calls the function to find the median starting from 0 to the end and assigns that to Q2
+ int middle=size/2;// finds the midpoint of the data set 
+ if(size%2==0){//if its even
+   *Q1=findMedian(arr,0,middle,size);//[1,2|Q1 ,Q3|3,4] the median isn't included so its exluded 
+   *Q3=findMedian(arr,middle,size,size);
+ }//end of if 
+ else{
+     *Q1=findMedian(arr,0,middle,size);
+     *Q3=findMedian(arr,middle+1,size,size);//skips the median(Q2) value 
+ }//end of else 
+ //findmean(arr,size);//finds mean of all data in the array
+ 
+}//end of quartiles
+    // part 2, finding the quartiles for lake superior 
+/*double arr2[20000];
+int c=0;//counter variable 
+FILE*y=fopen("Superior.txt","r");
+while(fscanf(y," %lf",&arr2[c])==1){
+   // printf("entered while loop\n");
+    printf("%d:%lf\n",c,arr2[c]);//checking to see if values are stored in the array
+    c++;
+}// end of while loop
+fclose(y);*/
