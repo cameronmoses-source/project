@@ -4,7 +4,7 @@
 
 void swap(double *a, double *b);  //function that swaps two values
 
-void bubblesort(double arr[]);  // function that sorts an array from lowest to highest 
+void bubblesort(double arr[], int size);  // function that sorts an array from lowest to highest 
 
 double findMedian(double arr[], int start, int end);   // finds the median of an array
 
@@ -17,7 +17,7 @@ int main(void) {
     
     //------------------------- opens file and creates arrary------------------------------//
     
-    double arr[100000];  // creates arrary
+    double arr[15000];  // creates arrary
     
     FILE *file;  // creates pointer
     
@@ -44,17 +44,21 @@ int main(void) {
     
     //printf("%d\n", size); used to see the size of the file
     
-    int a = size, b = size - 1; // position of the two positions in the array that need to be 
-    //swapped (tentatively size and size - 1 for ease of use)
+    //int a = size, b = size - 1; // position of the two positions in the array that need to be 
+    //swapped (tentatively size and size - 1 for ease of use... can be changed to anything)
     
     //printf("%f\n%f\n", arr[a], arr[b]); checks values of array before swap
     
-    swap(&arr[a], &arr[b]);
+    //swap(&arr[a], &arr[b]);
     
     // printf("%f\n%f", arr[a], arr[b]); checks values after swap 
     
     //-----------------------------------bubble sorting----------------------------------//
     
+    bubblesort(arr, size);
+    
+    for(i = 0; i < size; i++) printf("%f\n", arr[i]); //prints out the array  
+ 
     
     
     
@@ -64,11 +68,38 @@ int main(void) {
 
 void swap(double *a, double *b){
     
-    int day; //creates variable which can temporarily store the position of a while it is swapped to be 
+    double day; //creates variable which can temporarily store the position of a while it is swapped to be 
     day = *a; // stores position of a into variable
     *a = *b;  // sets the position of a to b
     *b = day;  // sets the position of b to day which is eqaul to the position of b 
     // therefore it sets the position of b to a...
+    
+}
+
+void bubblesort(double arr[], int size){
+  
+       int scount = 1; // scount is the amount of times the array swaps in a certain amount of time 
+    // needs to start at one to initalize the loop
+    
+    while (scount > 0){ // loop ends when a full run through of the list has gone thorugh without any swaps
+        
+        scount = 0; // sets scount to 0 because no swaps have been performed yet
+        
+        for(int i = 0; i < size - 1; i++){ // runs loop to check each pair of the array 
+            
+            if (arr[i] > arr[i + 1]) { // if the first pair of the array is larger then the second pair they swap
+                
+                //printf("%f\n%f\n", arr[i], arr[i+1]); checks values before swap
+                swap(&arr[i], &arr[i + 1]); // swaps the two values 
+                //printf("%f\n%f\n", arr[i], arr[i+1]); checks values after swap 
+                scount += 1; // increases the swap count since two values have been swapped
+                
+            }
+        
+        }
+    
+    }
+    
     
 }
 
