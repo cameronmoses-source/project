@@ -6,11 +6,11 @@ void swap(double *a, double *b);  //function that swaps two values
 
 void bubblesort(double arr[], int size);  // function that sorts an array from lowest to highest 
 
-double findMedian(double arr[], int start, int end);   // finds the median of an array
+double findMedian(double arr[], int start, int end, int size);   // finds the median of an array
 
 void findQuartiles(double arr[], int size, double *Q1, double *Q2, double *Q3); // Calculates the quartiles 
 
-double mean(double arr[], int size);  // computes the average of all values in the array
+double findmean(double arr[], int size);  // computes the average of all values in the array
 
 
 int main(void) {
@@ -59,8 +59,17 @@ int main(void) {
     
     for(i = 0; i < size; i++) printf("%f\n", arr[i]); //prints out the array  
  
+    //------------------------------find median--------------------------//
     
+    int start = 0, end = size; // start and end can be changed to any number to check median for a different range 
+    double median; // used to store median 
     
+    median = findMedian(arr, start, end, size); // uses the function to find the median 
+    
+    //--------------------------------Finding the mean----------------------//
+    double mean1 = findmean(arr, size);
+    
+    printf("\n mean: %f", mean1);
     
 }
 
@@ -93,12 +102,38 @@ void bubblesort(double arr[], int size){
                 swap(&arr[i], &arr[i + 1]); // swaps the two values 
                 //printf("%f\n%f\n", arr[i], arr[i+1]); checks values after swap 
                 scount += 1; // increases the swap count since two values have been swapped
-                
             }
-        
         }
-    
     }
+}
+
+double findMedian(double arr[], int start, int end, int size){
+    
+    double medsize, even, median; // medsize is the size of median data, even is used to check if the amount of values are even
+    
+    medsize = (end - start) / 2;
+    
+    if ((end - start) % 2 == 0) median = (arr[(int)medsize] + arr[(int)(medsize + 1)])/2; // checks if there is an even number of values in the array
+    //then since it is even it adds the two median values and divides them by two 
+    
+    else median = arr[(int)(medsize)]; // since it isn't even it's odd, it just finds the value from at the median position
+    
+    // all of this only works because the list is in ordered form...
+    return(median);
+    
+}
+
+double findmean(double arr[], int size){
+    
+    double sum = 0;
+    
+    for(int i = 0; i < size; i++) sum += arr[i];
+    
+    return(sum/size);
+    
+}
+
+
     
     
 }
