@@ -166,3 +166,46 @@ while(fscanf(y," %lf",&arr2[c])==1){
     c++;
 }// end of while loop
 fclose(y);*/
+//Q4 + Q5
+//dayly averages per day and store averages per day
+double dailyavg[365];
+int index = 0;
+int day;
+double temps[30];
+while (fscanf(file, "%d", &day) == 1 && index < 365) {
+    for (int i = 0; i < 30; i++) {
+        fscanf(file, "%lf", &temps[i]);
+    }
+    dailyavg[index] = findmean(temps, 30);
+    index++;
+}
+// find the coldest and warmest day
+double min = dailyavg[0];
+double max = dailyavg[0];
+int coldday = 1;
+int hotday = 1;
+for (int i = 1; i < index; i++) {
+    if (dailyavg[i] < min) {
+        min = dailyavg[i];
+        coldday = i + 1;
+    }
+    if (dailyavg[i] > max) {
+        max = dailyavg[i];
+        hotday = i + 1;
+    }
+}
+printf("Coldest Day: %d (%.2f°C)\n", coldday, min);
+daytodate(coldday);
+printf("Warmest Day: %d (%.2f°C)\n", hotday, max);
+daytodate(hotday);
+}
+//convert day to date of year
+void daytodate(int day) {
+    int monthdays[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int month = 0;
+    while (day > monthdays[month]) {
+        day -= monthdays[month];
+        month++;
+    }
+    printf("Month %d Day %d\n", month + 1, day);
+}
