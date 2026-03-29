@@ -8,9 +8,12 @@ void bubblesort(double arr[], int size);  // function that sorts an array from l
 
 double findMedian(double arr[], int start, int end, int size);   // finds the median of an array
 
-void findQuartiles(double arr[], int size,double *Q0, double *Q1, double *Q2, double *Q3, double *Q4); // Calculates the quartiles 
+void findQuartiles(double arr[], int size,double *Q0, double *Q1, double *Q2, double *Q3, double *Q4); // Calculates the quartiles
 
-double findmean(double arr[], int size);  // computes the average of all values in the array
+void runQ4();
+void runQ5();
+void findoutliers(double arr[], int size, double Q1, double Q3);
+void daytodate(int day);
 
 
 int main(void) {
@@ -24,6 +27,9 @@ int main(void) {
     FILE *file;  // creates pointer
     
     file = fopen("Erie.txt", "r");  // creates the position for the file
+//Call for Q4 and Q5
+    runQ4();
+    runQ5();
     
     int i = 0, size; // i is the counter variable whilst size tells the size of the file used for further claculations
     
@@ -166,46 +172,118 @@ while(fscanf(y," %lf",&arr2[c])==1){
     c++;
 }// end of while loop
 fclose(y);*/
-//Q4 + Q5
-//dayly averages per day and store averages per day
-double dailyavg[365];
-int index = 0;
-int day;
-double temps[30];
-while (fscanf(file, "%d", &day) == 1 && index < 365) {
-    for (int i = 0; i < 30; i++) {
-        fscanf(file, "%lf", &temps[i]);
+// Q4 function
+void runQ4() {
+
+    FILE *file = fopen("Erie.txt", "r");
+
+    if (file == NULL) {
+        printf("Error opening file\n");
+        return;
     }
-    dailyavg[index] = findmean(temps, 30);
-    index++;
-}
-// find the coldest and warmest day
-double min = dailyavg[0];
-double max = dailyavg[0];
-int coldday = 1;
-int hotday = 1;
-for (int i = 1; i < index; i++) {
-    if (dailyavg[i] < min) {
-        min = dailyavg[i];
-        coldday = i + 1;
+
+    int day;
+    double temps[30];
+    double Q0, Q1, Q2, Q3, Q4;
+
+    printf("\n--- Q4 RESULTS ---\n");
+
+    while (fscanf(file, "%d", &day) == 1) {
+
+        for (int i = 0; i < 30; i++) {
+            fscanf(file, "%lf", &temps[i]);
+        }
+
+        double copy[30];
+        for (int i = 0; i < 30; i++) copy[i] = temps[i];
+
+        findQuartiles(copy, 30, &Q0, &Q1, &Q2, &Q3, &Q4);
+
+        printf("Day %d: Q1=%.2f Q2=%.2f Q3=%.2f\n", day, Q1, Q2, Q3);
+
+        findoutliers(copy, 30, Q1, Q3);
     }
-    if (dailyavg[i] > max) {
-        max = dailyavg[i];
-        hotday = i + 1;
+
+    fclose(file);
+}
+// Q5 function
+void runQ5() {
+
+    FILE *file = fopen("Erie.txt", "r");
+
+    if (file == NULL) {
+        printf("Error opening file\n");
+        return;
+    }
+
+    double dailyavg[365];
+    int index = 0;
+    int day;
+    double temps[30];
+
+    while (fscanf(file, "%d", &day) == 1 && index < 365) {
+
+        for (int i = 0; i < 30; i++) {
+            fscanf(file, "%lf", &temps[i]);
+        }
+
+        dailyavg[index] = findmean(temps, 30);
+        index++;
+    }
+
+    fclose(file);
+
+    double min = dailyavg[0];
+    double max = dailyavg[0];
+
+    int coldday = 1;
+    int hotday = 1;
+
+    for (int i = 1; i < index; i++) {
+
+        if (dailyavg[i] < min) {
+            min = dailyavg[i];
+            coldday = i + 1;
+        }
+
+        if (dailyavg[i] > max) {
+            max = dailyavg[i];
+            hotday = i + 1;
+        }
+    }
+
+    printf("\n--- Q5 RESULTS ---\n");
+
+    printf("Coldest Day: %d (%.2f°C)\n", coldday, min);
+    daytodate(coldday);
+
+    printf("Warmest Day: %d (%.2f°C)\n", hotday, max);
+    daytodate(hotday);
+}
+
+void findOutliers(double arr[], int size, double Q1, double Q3) {
+
+    double IQR = Q3 - Q1;
+    double lower = Q1 - 1.5 * IQR;
+    double upper = Q3 + 1.5 * IQR;
+
+    for (int i = 0; i < size; i++) {
+        if (arr[i] < lower || arr[i] > upper) {
+            printf("   Outlier: %.2f\n", arr[i]);
+        }
     }
 }
-printf("Coldest Day: %d (%.2f°C)\n", coldday, min);
-daytodate(coldday);
-printf("Warmest Day: %d (%.2f°C)\n", hotday, max);
-daytodate(hotday);
-}
-//convert day to date of year
+
 void daytodate(int day) {
+
     int monthdays[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
     int month = 0;
+
     while (day > monthdays[month]) {
         day -= monthdays[month];
         month++;
     }
+
     printf("Month %d Day %d\n", month + 1, day);
 }
