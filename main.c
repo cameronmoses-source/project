@@ -82,6 +82,18 @@ int main(void) {
     findQuartiles(arr, size, &Q0, &Q1, &Q2, &Q3, &Q4);
     printf("Q0=%lf, Q1=%lf, Q2=%lf, Q3=%lf, Q4=%lf\n",Q0,Q1,Q2,Q3,Q4);
 
+double IQR,lowerbound,upperbound;
+IQR=Q3-Q1;
+lowerbound=Q1-1.5*IQR;
+upperbound=Q3+1.5*IQR;
+int c,year;
+for(c=0;c<size;c++){
+    arr[c];
+    year=1995+c;
+    if(arr[c]<lowerbound || arr[c]>upperbound){
+        printf("Outlier:%cfound at year:%d",arr[c],year);
+    }//end of if 
+}//end of for 
 }//end of main function 
 
 
