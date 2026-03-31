@@ -11,9 +11,16 @@ double findMedian(double arr[], int start, int end, int size);   // finds the me
 void findQuartiles(double arr[], int size,double *Q0, double *Q1, double *Q2, double *Q3, double *Q4); // Calculates the quartiles
 
 void runQ4();
+
 void runQ5();
+
 void findoutliers(double arr[], int size, double Q1, double Q3);
+
 void daytodate(int day);
+
+double findmean(double arr[], int size);
+
+double summerlovin(double arr[]);
 
 
 int main(void) {
@@ -48,6 +55,8 @@ int main(void) {
     
     size = i - 1 ; // counts the amount of times the loop runs and gives us the amount of days in the file
     
+    printf("%f", summerlovin(arr)); //finds the summer average i love summer 
+  
     //--------------------------swaps two different values (used for sorting)-------------------//
     
     //printf("%d\n", size); used to see the size of the file
@@ -65,7 +74,7 @@ int main(void) {
     
     bubblesort(arr, size);
     
-    for(i = 0; i < size; i++) printf("%f\n", arr[i]); //prints out the array  
+    //for(i = 0; i < size; i++) printf("%f\n", arr[i]); //prints out the array  
  
     //------------------------------find median--------------------------//
     
@@ -77,23 +86,24 @@ int main(void) {
     //--------------------------------Finding the mean----------------------//
     double mean1 = findmean(arr, size);
     
-    printf("\n mean: %f\n", mean1);
-    
+
     findQuartiles(arr, size, &Q0, &Q1, &Q2, &Q3, &Q4);
     printf("Q0=%lf, Q1=%lf, Q2=%lf, Q3=%lf, Q4=%lf\n",Q0,Q1,Q2,Q3,Q4);
 
-double IQR,lowerbound,upperbound;
-IQR=Q3-Q1;
-lowerbound=Q1-1.5*IQR;
-upperbound=Q3+1.5*IQR;
-int c,year;
-for(c=0;c<size;c++){
-    arr[c];
-    year=1995+c;
-    if(arr[c]<lowerbound || arr[c]>upperbound){
-        printf("Outlier:%cfound at year:%d",arr[c],year);
-    }//end of if 
-}//end of for 
+
+    double IQR,lowerbound,upperbound;
+    IQR=Q3-Q1;
+    lowerbound=Q1-1.5*IQR;
+    upperbound=Q3+1.5*IQR;
+    int c,year;
+    for(c=0;c<size;c++){
+        arr[c];
+        year=1995+c;
+        if(arr[c]<lowerbound || arr[c]>upperbound){
+            printf("Outlier:%cfound at year:%d",arr[c],year);
+        }//end of if 
+    }//end of for 
+
 }//end of main function 
 
 
@@ -156,6 +166,19 @@ double findmean(double arr[], int size){
     
 }
 
+double summerlovin(double arr[]){
+    
+    int sum, count;
+    
+    for( int i = 170 * 30 - 1; i < 265 * 30 - 1; i++) {
+        
+        sum += arr[i];
+        count += 1;
+    }
+    
+    return(sum/count);
+}
+
 
 void findQuartiles(double arr[], int size, double*Q0,double *Q1, double *Q2, double *Q3, double*Q4){    
  bubblesort(arr,size);//calls the function to sort the array from least to greatest
@@ -185,6 +208,8 @@ while(fscanf(y," %lf",&arr2[c])==1){
 }// end of while loop
 fclose(y);*/
 // Q4 function
+
+
 void runQ4() {
 
     FILE *file = fopen("Erie.txt", "r");
@@ -299,3 +324,5 @@ void daytodate(int day) {
 
     printf("Month %d Day %d\n", month + 1, day);
 }
+
+
