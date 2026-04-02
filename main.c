@@ -95,17 +95,22 @@ int main(void) {
     
     IQR=Q3-Q1;
     
-    lowerbound=Q1-1.5*IQR;
+    lowerbound = Q1 - 1.5 * IQR;
     
-    upperbound=Q3+1.5*IQR;
+   
+    upperbound = Q3+1.5*IQR; 
+    
+    printf("L: %f, U: %f", lowerbound, upperbound);
     
     int c,year;
     
-    for(c=0;c<size;c++)
-        year=1995+c;
+    
+    for(c=0; c<size; c++){
+        arr[c];
         if(arr[c]<lowerbound || arr[c]>upperbound){
-            printf("Outlier: %.2f found at year: %d\n", arr[c], year);
+            printf("Outlier:%.2ffound at month:%d\n",arr[c], c);
         }//end of if 
+        
     }//end of for 
 
 }//end of main function 
@@ -148,15 +153,13 @@ double findMedian(double arr[], int start, int end, int size){
     
     double medsize, even, median; // medsize is the size of median data, even is used to check if the amount of values are even
     
-    medsize = (end - start) / 2;
+    int count = end - start;
     
-    if ((end - start) % 2 == 0) median = (arr[(int)medsize] + arr[(int)(medsize + 1)])/2; // checks if there is an even number of values in the array
-    //then since it is even it adds the two median values and divides them by two 
+    int mid = start + count / 2.0;
     
-    else median = arr[(int)(medsize)]; // since it isn't even it's odd, it just finds the value from at the median position
+    if (count % 2 == 0) return(arr[mid - 1] + arr[mid]) / 2.0;
+    else return(arr[mid]);
     
-    // all of this only works because the list is in ordered form...
-    return(median);
     
 }
 
@@ -172,7 +175,8 @@ double findmean(double arr[], int size){
 
 double summerlovin(double arr[]){
     
-    int sum = 0, count = 0;
+    double sum = 0; 
+    int count = 0;
     
     for( int i = 170 * 30 - 1; i < 265 * 30 - 1; i++) {
         
@@ -180,38 +184,28 @@ double summerlovin(double arr[]){
         count += 1;
     }
     
-    return(sum/count);
+    return(sum/(double)count);
 }
 
 
 void findQuartiles(double arr[], int size, double*Q0,double *Q1, double *Q2, double *Q3, double*Q4){    
- bubblesort(arr,size);//calls the function to sort the array from least to greatest
- *Q0=arr[0];//lowest element of the data set 
- *Q4=arr[size-1];//highest element of the data set, gets shifted one to the right since it indexes at zero
- *Q2=findMedian(arr,0,size,size);//calls the function to find the median starting from 0 to the end and assigns that to Q2
- int middle=size/2;// finds the midpoint of the data set 
- if(size%2==0){//if its even
-   *Q1=findMedian(arr,0,middle,size);//[1,2|Q1 ,Q3|3,4] the median isn't included so its exluded 
-   *Q3=findMedian(arr,middle,size,size);
- }//end of if 
- else{
-     *Q1=findMedian(arr,0,middle,size);
-     *Q3=findMedian(arr,middle+1,size,size);//skips the median(Q2) value 
- }//end of else 
- //findmean(arr,size);//finds mean of all data in the array
+    bubblesort(arr,size);//calls the function to sort the array from least to greatest
  
-}//end of quartiles
-    // part 2, finding the quartiles for lake superior 
-/*double arr2[20000];
-int c=0;//counter variable 
-FILE*y=fopen("Superior.txt","r");
-while(fscanf(y," %lf",&arr2[c])==1){
-   // printf("entered while loop\n");
-    printf("%d:%lf\n",c,arr2[c]);//checking to see if values are stored in the array
-    c++;
-}// end of while loop
-fclose(y);*/
-// Q4 function
+    int posQ2, count = 0, x = 0;
+ 
+    *Q0=arr[0];//lowest element of the data set 
+ 
+    *Q4=arr[size-1];//highest element of the data set, gets shifted one to the right since it indexes at zero
+ 
+    *Q2=findMedian(arr,0,size,size);
+ 
+    while(x != 1){
+        if(arr[count] == *Q2) x = 1;
+        else count++;
+        
+        if (count == 30000) break;
+    }
+
 
 
 void runQ4() {
