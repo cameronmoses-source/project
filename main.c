@@ -92,10 +92,15 @@ int main(void) {
 
 
     double IQR,lowerbound,upperbound;
+    
     IQR=Q3-Q1;
+    
     lowerbound=Q1-1.5*IQR;
+    
     upperbound=Q3+1.5*IQR;
+    
     int c,year;
+    
     for(c=0;c<size;c++){
         arr[c];
         year=1995+c;
@@ -168,7 +173,7 @@ double findmean(double arr[], int size){
 
 double summerlovin(double arr[]){
     
-    int sum, count;
+    int sum = 0, count = 0;
     
     for( int i = 170 * 30 - 1; i < 265 * 30 - 1; i++) {
         
@@ -324,5 +329,6 @@ void daytodate(int day) {
 
     printf("Month %d Day %d\n", month + 1, day);
 }
+
 
 
