@@ -223,17 +223,20 @@ void runQ4() {
         return;
     }
 
-    int day;
+    int day = 1;
     double temps[30];
     double Q0, Q1, Q2, Q3, Q4;
 
     printf("\n--- Q4 RESULTS ---\n");
 
-    while (fscanf(file, "%d", &day) == 1) {
+    while (day <= 365) {
 
-        for (int i = 0; i < 30; i++) {
-            fscanf(file, "%lf", &temps[i]);
-        }
+    for (int i = 0; i < 30; i++) {
+        if (fscanf(file, "%lf", &temps[i]) != 1) return;
+    }
+
+    day++;
+}
 
         double copy[30];
         for (int i = 0; i < 30; i++) copy[i] = temps[i];
