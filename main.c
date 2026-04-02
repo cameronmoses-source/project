@@ -243,8 +243,8 @@ void runQ4() {
 
         findQuartiles(copy, 30, &Q0, &Q1, &Q2, &Q3, &Q4);
 
-        printf("Day %d: Q1=%.2f Q2=%.2f Q3=%.2f\n", day, Q1, Q2, Q3);
-
+        printf("\nDay %d:\n", day);
+        printf("Q1 = %.2f, Q2 = %.2f, Q3 = %.2f\n", Q1, Q2, Q3);
         findoutliers(copy, 30, Q1, Q3);
     }
 
