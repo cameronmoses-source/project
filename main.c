@@ -223,29 +223,32 @@ void runQ4() {
         return;
     }
 
-    int day = 1;
     double temps[30];
     double Q0, Q1, Q2, Q3, Q4;
+    int day = 1;
 
     printf("\n--- Q4 RESULTS ---\n");
 
     while (day <= 365) {
 
     for (int i = 0; i < 30; i++) {
-        if (fscanf(file, "%lf", &temps[i]) != 1) return;
-    }
-
-    day++;
-}
+            if (fscanf(file, "%lf", &temps[i]) != 1) {
+                fclose(file);
+                return;
+            }
+        }
 
         double copy[30];
         for (int i = 0; i < 30; i++) copy[i] = temps[i];
 
         findQuartiles(copy, 30, &Q0, &Q1, &Q2, &Q3, &Q4);
 
-        printf("\nDay %d:\n", day);
+         printf("\nDay %d:\n", day);
         printf("Q1 = %.2f, Q2 = %.2f, Q3 = %.2f\n", Q1, Q2, Q3);
+
         findoutliers(copy, 30, Q1, Q3);
+
+        day++;
     }
 
     fclose(file);
