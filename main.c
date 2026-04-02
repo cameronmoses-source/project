@@ -101,11 +101,10 @@ int main(void) {
     
     int c,year;
     
-    for(c=0;c<size;c++){
-        arr[c];
+    for(c=0;c<size;c++)
         year=1995+c;
         if(arr[c]<lowerbound || arr[c]>upperbound){
-            printf("Outlier:%cfound at year:%d",arr[c],year);
+            printf("Outlier: %.2f found at year: %d\n", arr[c], year);
         }//end of if 
     }//end of for 
 
@@ -303,7 +302,7 @@ void runQ5() {
     daytodate(hotday);
 }
 
-void findOutliers(double arr[], int size, double Q1, double Q3) {
+void findoutliers(double arr[], int size, double Q1, double Q3) {
 
     double IQR = Q3 - Q1;
     double lower = Q1 - 1.5 * IQR;
