@@ -10,7 +10,7 @@ double findMedian(double arr[], int start, int end, int size);   // finds the me
 
 void findQuartiles(double arr[], int size,double *Q0, double *Q1, double *Q2, double *Q3, double *Q4); // Calculates the quartiles
 
-void runQ4();
+void runQ4(int out);
 
 void runQ5();
 
@@ -21,6 +21,8 @@ void daytodate(int day);
 double findmean(double arr[], int size);
 
 double summerlovin(double arr[]);
+
+//-------------------------------------------------------------------------------------------//
 
 
 int main(void) {
@@ -34,9 +36,6 @@ int main(void) {
     FILE *file;  // creates pointer
     
     file = fopen("Erie.txt", "r");  // creates the position for the file
-//Call for Q4 and Q5
-    runQ4();
-    runQ5();
     
     int i = 0, size; // i is the counter variable whilst size tells the size of the file used for further claculations
     
@@ -46,6 +45,7 @@ int main(void) {
         //printf("%f\n", arr[i]);
         i++; 
     }
+    
     // reads every number into an array
     // array goes from the first day of year one all the way to the first day of year two 
     // which then goes to the second day of year one and so on...
@@ -53,9 +53,9 @@ int main(void) {
     
     fclose(file);
     
-    size = i - 1 ; // counts the amount of times the loop runs and gives us the amount of days in the file
+    size = i; // counts the amount of times the loop runs and gives us the amount of days in the file
     
-    printf("%f", summerlovin(arr)); //finds the summer average i love summer 
+    //printf("%f", summerlovin(arr)); //finds the summer average i love summer 
   
     //--------------------------swaps two different values (used for sorting)-------------------//
     
@@ -72,32 +72,27 @@ int main(void) {
     
     //-----------------------------------bubble sorting----------------------------------//
     
-    bubblesort(arr, size);
+    //bubblesort(arr, size);
     
     //for(i = 0; i < size; i++) printf("%f\n", arr[i]); //prints out the array  
  
     //------------------------------find median--------------------------//
     
-    int start = 0, end = size; // start and end can be changed to any number to check median for a different range 
-    double median; // used to store median 
-    
-    median = findMedian(arr, start, end, size); // uses the function to find the median 
+    //int start = 0, end = size; // start and end can be changed to any number to check median for a different range 
+    //double median; // used to store median 
+    //median = findMedian(arr, start, end, size); // uses the function to find the median 
     
     //--------------------------------Finding the mean----------------------//
-    double mean1 = findmean(arr, size);
+    //double mean1 = findmean(arr, size);
     
-
-    findQuartiles(arr, size, &Q0, &Q1, &Q2, &Q3, &Q4);
-    printf("Q0=%lf, Q1=%lf, Q2=%lf, Q3=%lf, Q4=%lf\n",Q0,Q1,Q2,Q3,Q4);
-
-
-    double IQR,lowerbound,upperbound;
+    //-------------------------------------//
     
-    IQR=Q3-Q1;
-    
-    lowerbound = Q1 - 1.5 * IQR;
-    
-   
+    /*
+    //findQuartiles(arr, size, &Q0, &Q1, &Q2, &Q3, &Q4);
+    //printf("Q0=%lf, Q1=%lf, Q2=%lf, Q3=%lf, Q4=%lf\n",Q0,Q1,Q2,Q3,Q4);
+    //double IQR,lowerbound,upperbound;
+    //IQR=Q3-Q1;
+    //lowerbound = Q1 - 1.5 * IQR;
     upperbound = Q3+1.5*IQR; 
     
     printf("L: %f, U: %f", lowerbound, upperbound);
@@ -108,10 +103,49 @@ int main(void) {
     for(c=0; c<size; c++){
         arr[c];
         if(arr[c]<lowerbound || arr[c]>upperbound){
-            printf("Outlier:%.2ffound at month:%d\n",arr[c], c);
+            //printf("Outlier:%.2ffound at month:%d\n",arr[c], c);
         }//end of if 
         
     }//end of for 
+    
+    */
+   
+    
+    int question = 1;
+    int out;
+    
+    while(question > 0 && question < 7){
+        printf("What question would you like to veiw? (please input a number from 1 - 6) type anything else to end:  ");
+        
+        scanf("%d", &question);
+        if (question == 1){
+            printf("\nQUESTION 1: The helper functions can be seen at top of the code, and below the main function");
+        }
+        if (question == 2){
+            out = 0;
+            runQ4(out);
+        }
+        if (question == 3){
+            out = 1;
+            runQ4(out);
+            
+        }
+        if (question == 4){
+            out = 0;
+            runQ4(out);
+        }
+        if (question == 5){
+            
+            runQ5();
+            
+        }
+        if (question == 6){
+            printf("Average summer temp:  %f\n", summerlovin(arr));
+            
+            
+        }
+        
+    }
 
 }//end of main function 
 
@@ -175,6 +209,36 @@ double findmean(double arr[], int size){
 
 double summerlovin(double arr[]){
     
+    int lake;
+    FILE *file = NULL;
+    
+    printf("what file do you want to see?\nSUPERIOR: 1\nERIE: 2\nHURON: 3\nST.CLAIR:4\nONTARIO: 5\nMICHIGAN: 6\n");
+    scanf("%d", &lake);
+    while(lake < 1 || lake > 6){
+       printf("please enter a proper number:  ");
+       scanf("%d", &lake);
+    }
+    
+    
+    char *filename[] = { "Superior.txt", "Erie.txt", "Huron.txt", "St.Clair.txt", "Ontario.txt", "Michigan.txt"};
+    
+    file = fopen(filename[lake - 1], "r");
+    
+
+    if (file == NULL) {
+        printf("Error opening file\n");
+    }
+    
+    int i = 0, size; // i is the counter variable whilst size tells the size of the file used for further claculations
+    
+    while(fscanf(file, "%lf", &arr[i]) == 1){ 
+        
+        //printf("%d   ", i); these two lines can be used to see array
+        //printf("%f\n", arr[i]);
+        i++; 
+    }
+    fclose(file);
+    
     double sum = 0; 
     int count = 0;
     
@@ -205,12 +269,30 @@ void findQuartiles(double arr[], int size, double*Q0,double *Q1, double *Q2, dou
         
         if (count == 30000) break;
     }
+    
+    *Q1 = findMedian(arr, 0, x, size);
+    *Q3 = findMedian(arr, x, size, size);
+    
+}
 
 
 
-void runQ4() {
-
-    FILE *file = fopen("Erie.txt", "r");
+void runQ4(int out) {
+    int lake;
+    FILE *file = NULL;
+    
+    printf("what file do you want to see?\nSUPERIOR: 1\nERIE: 2\nHURON: 3\nST.CLAIR:4\nONTARIO: 5\nMICHIGAN: 6\n");
+    scanf("%d", &lake);
+    while(lake < 1 || lake > 6){
+       printf("please enter a proper number:  ");
+       scanf("%d", &lake);
+    }
+    
+    
+    char *filename[] = { "Superior.txt", "Erie.txt", "Huron.txt", "St.Clair.txt", "Ontario.txt", "Michigan.txt"};
+    
+    file = fopen(filename[lake - 1], "r");
+    
 
     if (file == NULL) {
         printf("Error opening file\n");
@@ -221,27 +303,27 @@ void runQ4() {
     double Q0, Q1, Q2, Q3, Q4;
     int day = 1;
 
-    printf("\n--- Q4 RESULTS ---\n");
-
     while (day <= 365) {
-
-    for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             if (fscanf(file, "%lf", &temps[i]) != 1) {
                 fclose(file);
                 return;
             }
         }
-
+        
         double copy[30];
+        
         for (int i = 0; i < 30; i++) copy[i] = temps[i];
-
+        
         findQuartiles(copy, 30, &Q0, &Q1, &Q2, &Q3, &Q4);
-
-         printf("\nDay %d:\n", day);
+        if (out = 0){
+        printf("\nDay %d:\n", day);
+        
         printf("Q1 = %.2f, Q2 = %.2f, Q3 = %.2f\n", Q1, Q2, Q3);
-
-        findoutliers(copy, 30, Q1, Q3);
-
+        }
+        
+        if (out = 1) findoutliers(copy, 30, Q1, Q3);
+        
         day++;
     }
 
@@ -250,7 +332,21 @@ void runQ4() {
 // Q5 function
 void runQ5() {
 
-    FILE *file = fopen("Erie.txt", "r");
+    int lake;
+    FILE *file = NULL;
+    
+    printf("what file do you want to see?\nSUPERIOR: 1\nERIE: 2\nHURON: 3\nST.CLAIR:4\nONTARIO: 5\nMICHIGAN: 6\n");
+    scanf("%d", &lake);
+    while(lake < 1 || lake > 6){
+       printf("please enter a proper number:  ");
+       scanf("%d", &lake);
+    }
+    
+    
+    char *filename[] = { "Superior.txt", "Erie.txt", "Huron.txt", "St.Clair.txt", "Ontario.txt", "Michigan.txt"};
+    
+    file = fopen(filename[lake - 1], "r");
+    
 
     if (file == NULL) {
         printf("Error opening file\n");
@@ -328,6 +424,8 @@ void daytodate(int day) {
 
     printf("Month %d Day %d\n", month + 1, day);
 }
+
+
 
 
 
